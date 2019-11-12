@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -34,13 +35,20 @@ public class MainActivity extends AppCompatActivity {
         });
         edmonth = findViewById(R.id.month);
         ednext = findViewById(R.id.next);
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                caculate();
+            }
+        });
     }
     public void reset() {
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
 
-    public void button(View view) {
+    public void caculate() {
         if (!TextUtils.isEmpty(edmonth.getText().toString())) {
             float monthValue = Float.parseFloat(edmonth.getText().toString());
             if (monthValue >= 1 && monthValue <= 10) {
