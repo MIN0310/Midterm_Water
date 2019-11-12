@@ -1,5 +1,7 @@
 package com.fju.water;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -23,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        edmonth = findViewById(R.id.month);
-        ednext = findViewById(R.id.next);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,35 +32,60 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        edmonth = findViewById(R.id.month);
+        ednext = findViewById(R.id.next);
+    }
+    public void reset() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 
     public void button(View view) {
-
         if (!TextUtils.isEmpty(edmonth.getText().toString())) {
             float monthValue = Float.parseFloat(edmonth.getText().toString());
             if (monthValue >= 1 && monthValue <= 10) {
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("每月抄表費用")
                         .setMessage("費用：" + (float) (monthValue * 7.35))
-                        .setPositiveButton("OK", null)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                reset();
+                            }
+                        })
                         .show();
             } else if (monthValue >= 11 && monthValue <= 30) {
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("每月抄表費用")
                         .setMessage("費用：" + (float) (monthValue * 9.45 - 21))
-                        .setPositiveButton("OK", null)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                reset();
+                            }
+                        })
                         .show();
             } else if (monthValue >= 31 && monthValue <= 50) {
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("每月抄表費用")
                         .setMessage("費用：" + (float) (monthValue * 11.55 - 84))
-                        .setPositiveButton("OK", null)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                reset();
+                            }
+                        })
                         .show();
             } else if (monthValue >= 51) {
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("每月抄表費用")
                         .setMessage("費用：" + (float) (monthValue * 12.075 - 110.25))
-                        .setPositiveButton("OK", null)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                reset();
+                            }
+                        })
                         .show();
             }
         }
@@ -70,27 +95,58 @@ public class MainActivity extends AppCompatActivity {
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("隔月抄表費用")
                         .setMessage("費用：" + (float) (nextValue * 7.35))
-                        .setPositiveButton("OK", null)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                reset();
+                            }
+                        })
                         .show();
             } else if (nextValue >= 21 && nextValue <= 60) {
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("隔月抄表費用")
                         .setMessage("費用：" + (float) (nextValue * 9.45 - 42))
-                        .setPositiveButton("OK", null)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                reset();
+                            }
+                        })
                         .show();
             } else if (nextValue >= 61 && nextValue <= 100) {
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("隔月抄表費用")
                         .setMessage("費用：" + (float) (nextValue * 11.55 - 168))
-                        .setPositiveButton("OK", null)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                reset();
+                            }
+                        })
                         .show();
             } else if (nextValue >= 101) {
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("隔月抄表費用")
                         .setMessage("費用：" + (float) (nextValue * 12.075 - 220.5))
-                        .setPositiveButton("OK", null)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                reset();
+                            }
+                        })
                         .show();
             }
+        }
+        if (TextUtils.isEmpty(edmonth.getText().toString()) && TextUtils.isEmpty(ednext.getText().toString())) {
+            new AlertDialog.Builder(this)
+                    .setTitle("注意")
+                    .setMessage("請輸入度數")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            reset();
+                        }
+                    }).show();
         }
     }
 
