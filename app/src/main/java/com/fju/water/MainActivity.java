@@ -19,7 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MainActivity extends AppCompatActivity {
     private TextView edmonth;
     private TextView ednext;
-
+    float fee = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,100 +52,40 @@ public class MainActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(edmonth.getText().toString())) {
             float monthValue = Float.parseFloat(edmonth.getText().toString());
             if (monthValue >= 1 && monthValue <= 10) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("每月抄表費用")
-                        .setMessage("費用：" + (float) (monthValue * 7.35))
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                reset();
-                            }
-                        })
-                        .show();
+                fee = (float) (monthValue * 7.35);
             } else if (monthValue >= 11 && monthValue <= 30) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("每月抄表費用")
-                        .setMessage("費用：" + (float) (monthValue * 9.45 - 21))
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                reset();
-                            }
-                        })
-                        .show();
+                fee = (float) (monthValue * 9.45 - 21);
             } else if (monthValue >= 31 && monthValue <= 50) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("每月抄表費用")
-                        .setMessage("費用：" + (float) (monthValue * 11.55 - 84))
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                reset();
-                            }
-                        })
-                        .show();
+                fee = (float) (monthValue * 11.55 - 84);
             } else if (monthValue >= 51) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("每月抄表費用")
-                        .setMessage("費用：" + (float) (monthValue * 12.075 - 110.25))
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                reset();
-                            }
-                        })
-                        .show();
+                fee = (float) (monthValue * 12.075 - 110.25);
             }
-        }
-        if (!TextUtils.isEmpty(ednext.getText().toString())) {
-            float nextValue = Float.parseFloat(ednext.getText().toString());
-            if (nextValue >= 1 && nextValue <= 20) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("隔月抄表費用")
-                        .setMessage("費用：" + (float) (nextValue * 7.35))
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                reset();
-                            }
-                        })
-                        .show();
-            } else if (nextValue >= 21 && nextValue <= 60) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("隔月抄表費用")
-                        .setMessage("費用：" + (float) (nextValue * 9.45 - 42))
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                reset();
-                            }
-                        })
-                        .show();
-            } else if (nextValue >= 61 && nextValue <= 100) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("隔月抄表費用")
-                        .setMessage("費用：" + (float) (nextValue * 11.55 - 168))
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                reset();
-                            }
-                        })
-                        .show();
-            } else if (nextValue >= 101) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("隔月抄表費用")
-                        .setMessage("費用：" + (float) (nextValue * 12.075 - 220.5))
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                reset();
-                            }
-                        })
-                        .show();
+            if (!TextUtils.isEmpty(ednext.getText().toString())) {
+                float nextValue = Float.parseFloat(ednext.getText().toString());
+                if (nextValue >= 1 && nextValue <= 20) {
+                    fee = (float) (nextValue * 7.35);
+                } else if (nextValue >= 21 && nextValue <= 60) {
+                    fee = (float) (nextValue * 9.45 - 42);
+                } else if (nextValue >= 61 && nextValue <= 100) {
+                    fee = (float) (nextValue * 11.55 - 168);
+                } else if (nextValue >= 101) {
+                    fee = (float)(nextValue * 12.075 - 220.5);
+                }
             }
+//            new AlertDialog.Builder(MainActivity.this)
+//                    .setTitle("每月抄表費用")
+//                    .setMessage("費用：" + fee)
+//                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            reset();
+//                        }
+//                    })
+//                    .show();
         }
         if (TextUtils.isEmpty(edmonth.getText().toString()) && TextUtils.isEmpty(ednext.getText().toString())) {
+            float monthValue = Float.parseFloat(edmonth.getText().toString());
+            float nextValue = Float.parseFloat(ednext.getText().toString());
             new AlertDialog.Builder(this)
                     .setTitle("注意")
                     .setMessage("請輸入度數")
@@ -156,7 +96,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }).show();
         }
+        Intent intent = new Intent(this,ResultActivity.class);
+        intent.putExtra("FEE", fee);
+        startActivity(intent);
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
