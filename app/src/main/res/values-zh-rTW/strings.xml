@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">水表</string>
+    <string name="back">返回</string>
+    <string name="caculate">計算</string>
+    <string name="ever_other_month">隔月抄表</string>
+    <string name="fee">"水費: "</string>
+    <string name="monthly">每月抄表</string>
+    <string name="result">結果</string>
+    <string name="water_fee">水費</string>
+    <string name="please_enter_the_degree">請輸入度數!</string>
+    <string name="error">錯誤</string>
+</resources>

@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             }
 //            new AlertDialog.Builder(MainActivity.this)
 //                    .setTitle("每月抄表費用")
-//                    .setMessage("費用：" + fee)
+//                    .setMessage(getString(R.string.fee) + fee)
 //                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 //                        @Override
 //                        public void onClick(DialogInterface dialog, int which) {
@@ -83,12 +83,15 @@ public class MainActivity extends AppCompatActivity {
 //                    })
 //                    .show();
         }
+        Intent intent = new Intent(this,ResultActivity.class);
+        intent.putExtra(getString(R.string.extra_fee), fee);
+        startActivity(intent);
+
         if (TextUtils.isEmpty(edmonth.getText().toString()) && TextUtils.isEmpty(ednext.getText().toString())) {
-            float monthValue = Float.parseFloat(edmonth.getText().toString());
-            float nextValue = Float.parseFloat(ednext.getText().toString());
+
             new AlertDialog.Builder(this)
-                    .setTitle("注意")
-                    .setMessage("請輸入度數")
+                    .setTitle(getString(R.string.error))
+                    .setMessage(getString(R.string.please_enter_the_degree))
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -96,9 +99,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }).show();
         }
-        Intent intent = new Intent(this,ResultActivity.class);
-        intent.putExtra("FEE", fee);
-        startActivity(intent);
+
 
     }
 

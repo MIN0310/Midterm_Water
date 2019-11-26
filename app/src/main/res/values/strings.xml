@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Water</string>
     <string name="action_settings">Settings</string>
+    <string name="monthly">Monthly</string>
+    <string name="ever_other_month">Ever other month</string>
+    <string name="water_fee">Water Fee</string>
+    <string name="fee">Fee:</string>
+    <string name="back">back</string>
+    <string name="result">Result</string>
+    <string name="extra_fee">FEE</string>
+    <string name="caculate">caculate</string>
+    <string name="error">Error</string>
+    <string name="please_enter_the_degree">Please enter the degree!</string>
 </resources>
