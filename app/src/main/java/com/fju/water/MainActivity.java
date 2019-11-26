@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,8 +20,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
     private TextView edmonth;
-    private TextView ednext;
     float fee = 0;
+    boolean isNext = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         edmonth = findViewById(R.id.month);
-        ednext = findViewById(R.id.next);
         Button button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,9 +44,22 @@ public class MainActivity extends AppCompatActivity {
                 caculate();
             }
         });
+        Switch sw = findViewById(R.id.switch2);
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isNext = isChecked;
+                TextView text = findViewById(R.id.switch2);
+                text.setText(isNext ? getText(R.string.ever_other_month) : getText(R.string.monthly));
+                TextView text2 = findViewById(R.id.type);
+                text2.setText(isNext ? getText(R.string.ever_other_month) : getText(R.string.monthly));
+            }
+        });
+
     }
+
     public void reset() {
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -60,18 +75,19 @@ public class MainActivity extends AppCompatActivity {
             } else if (monthValue >= 51) {
                 fee = (float) (monthValue * 12.075 - 110.25);
             }
-            if (!TextUtils.isEmpty(ednext.getText().toString())) {
-                float nextValue = Float.parseFloat(ednext.getText().toString());
-                if (nextValue >= 1 && nextValue <= 20) {
-                    fee = (float) (nextValue * 7.35);
-                } else if (nextValue >= 21 && nextValue <= 60) {
-                    fee = (float) (nextValue * 9.45 - 42);
-                } else if (nextValue >= 61 && nextValue <= 100) {
-                    fee = (float) (nextValue * 11.55 - 168);
-                } else if (nextValue >= 101) {
-                    fee = (float)(nextValue * 12.075 - 220.5);
-                }
-            }
+
+//            if (!TextUtils.isEmpty(ednext.getText().toString())) {
+//                float nextValue = Float.parseFloat(ednext.getText().toString());
+//                if (nextValue >= 1 && nextValue <= 20) {
+//                    fee = (float) (nextValue * 7.35);
+//                } else if (nextValue >= 21 && nextValue <= 60) {
+//                    fee = (float) (nextValue * 9.45 - 42);
+//                } else if (nextValue >= 61 && nextValue <= 100) {
+//                    fee = (float) (nextValue * 11.55 - 168);
+//                } else if (nextValue >= 101) {
+//                    fee = (float)(nextValue * 12.075 - 220.5);
+//                }
+        }
 //            new AlertDialog.Builder(MainActivity.this)
 //                    .setTitle("每月抄表費用")
 //                    .setMessage(getString(R.string.fee) + fee)
@@ -82,26 +98,36 @@ public class MainActivity extends AppCompatActivity {
 //                        }
 //                    })
 //                    .show();
-        }
-        Intent intent = new Intent(this,ResultActivity.class);
-        intent.putExtra(getString(R.string.extra_fee), fee);
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra(getString(R.string.extra_fee),fee);
         startActivity(intent);
-
-        if (TextUtils.isEmpty(edmonth.getText().toString()) && TextUtils.isEmpty(ednext.getText().toString())) {
-
-            new AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.error))
-                    .setMessage(getString(R.string.please_enter_the_degree))
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            reset();
-                        }
-                    }).show();
-        }
-
-
     }
+
+
+
+//        if(TextUtils.isEmpty(edmonth.getText().
+//
+//    toString())&&TextUtils.isEmpty(ednext.getText().
+//
+//    toString()))
+//
+//    {
+//
+//        new AlertDialog.Builder(this)
+//                .setTitle(getString(R.string.error))
+//                .setMessage(getString(R.string.please_enter_the_degree))
+//                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        reset();
+//                    }
+//                }).show();
+//    }
+
+
+
+
+
 
 
     @Override
