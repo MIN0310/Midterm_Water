@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -56,10 +58,18 @@ public class MainActivity extends AppCompatActivity {
                 text.setText(isNext ? getText(R.string.ever_other_month) : getText(R.string.monthly));
                 TextView text2 = findViewById(R.id.type);
                 text2.setText(isNext ? getText(R.string.ever_other_month) : getText(R.string.monthly));
+            }
+        });
+        Spinner cities = findViewById(R.id.spinner);
+        cities.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, getResources().getStringArray(R.array.cities)[position]);
+            }
 
-                if(isNext!=isChecked){
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-                }
             }
         });
 
@@ -107,8 +117,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void caculate() {
+
+        float monthValue = Float.parseFloat(edmonth.getText().toString());
         if (!TextUtils.isEmpty(edmonth.getText().toString())) {
-            float monthValue = Float.parseFloat(edmonth.getText().toString());
             if (monthValue >= 1 && monthValue <= 10) {
                 fee = (float) (monthValue * 7.35);
             } else if (monthValue >= 11 && monthValue <= 30) {
@@ -118,29 +129,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (monthValue >= 51) {
                 fee = (float) (monthValue * 12.075 - 110.25);
             }
-
-//            if (!TextUtils.isEmpty(ednext.getText().toString())) {
-//                float nextValue = Float.parseFloat(ednext.getText().toString());
-//                if (nextValue >= 1 && nextValue <= 20) {
-//                    fee = (float) (nextValue * 7.35);
-//                } else if (nextValue >= 21 && nextValue <= 60) {
-//                    fee = (float) (nextValue * 9.45 - 42);
-//                } else if (nextValue >= 61 && nextValue <= 100) {
-//                    fee = (float) (nextValue * 11.55 - 168);
-//                } else if (nextValue >= 101) {
-//                    fee = (float)(nextValue * 12.075 - 220.5);
-//                }
         }
-//            new AlertDialog.Builder(MainActivity.this)
-//                    .setTitle("每月抄表費用")
-//                    .setMessage(getString(R.string.fee) + fee)
-//                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            reset();
-//                        }
-//                    })
-//                    .show();
+
+
         Intent intent = new Intent(this, ResultActivity.class);
         intent.putExtra(getString(R.string.extra_fee),fee);
         startActivity(intent);
