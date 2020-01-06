@@ -117,19 +117,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void caculate() {
-
-        float monthValue = Float.parseFloat(edmonth.getText().toString());
-        if (!TextUtils.isEmpty(edmonth.getText().toString())) {
-            if (monthValue >= 1 && monthValue <= 10) {
-                fee = (float) (monthValue * 7.35);
-            } else if (monthValue >= 11 && monthValue <= 30) {
-                fee = (float) (monthValue * 9.45 - 21);
-            } else if (monthValue >= 31 && monthValue <= 50) {
-                fee = (float) (monthValue * 11.55 - 84);
-            } else if (monthValue >= 51) {
-                fee = (float) (monthValue * 12.075 - 110.25);
+        if(!isNext){
+            float monthValue = Float.parseFloat(edmonth.getText().toString());
+            if (!TextUtils.isEmpty(edmonth.getText().toString())) {
+                if (monthValue >= 1 && monthValue <= 10) {
+                    fee = (float) (monthValue * 7.35);
+                } else if (monthValue >= 11 && monthValue <= 30) {
+                    fee = (float) (monthValue * 9.45 - 21);
+                } else if (monthValue >= 31 && monthValue <= 50) {
+                    fee = (float) (monthValue * 11.55 - 84);
+                } else if (monthValue >= 51) {
+                    fee = (float) (monthValue * 12.075 - 110.25);
+                }
+            }
+        }else {
+            float monthValue = Float.parseFloat(edmonth.getText().toString());
+            if (!TextUtils.isEmpty(edmonth.getText().toString())) {
+                if (monthValue >= 1 && monthValue <= 20) {
+                    fee = (float) (monthValue * 7.35);
+                } else if (monthValue >= 21 && monthValue <= 60) {
+                    fee = (float) (monthValue * 9.45 - 42);
+                } else if (monthValue >= 61 && monthValue <= 100) {
+                    fee = (float) (monthValue * 11.55 - 168);
+                } else if (monthValue >= 101) {
+                    fee = (float) (monthValue * 12.075 - 220.5);
+                }
             }
         }
+
+
 
 
         Intent intent = new Intent(this, ResultActivity.class);
